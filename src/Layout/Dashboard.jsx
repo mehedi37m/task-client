@@ -1,102 +1,125 @@
 import { Helmet } from "react-helmet-async";
 import { FaAd, FaHome, FaList, FaListAlt, FaParagraph, FaSearch, FaShoppingCart, FaUser, FaUsers, FaUtensils, } from "react-icons/fa";
-import { FcStatistics } from "react-icons/fc";
 import { MdDeliveryDining } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useGetAllUsers from "../hooks/useGetAllUsers";
-
+import { useState } from "react";
 
 const Dashboard = () => {
-
-  const {user} = useAuth();
-
+  const { user } = useAuth();
   const [users] = useGetAllUsers();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const newUser = users.find(man =>man.email == user.email)
+  const newUser = users.find(man => man.email === user.email);
+  const isAdmin = newUser?.role === 'admin';
+  const isDeliveryMan = newUser?.role === 'deliveryMan';
+  const isUser = newUser?.role === 'user';
 
-  console.log(newUser)
-    
-  const isAdmin = newUser.role == 'admin';
-  const isDeliveryMan = newUser.role == 'deliveryMan';
-  const isUser = newUser.role == 'user';
+  const menuItemClass = ({ isActive }) =>
+    `flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-700 hover:text-white transition-colors ${
+      isActive ? "bg-red-700 text-white font-semibold" : "text-white"
+    }`;
 
-  // console.log(isUser)
-  // console.log(user)
-    
   return (
-    <div>
-       <Helmet>
+    <div className="flex h-screen overflow-hidden">
+      <Helmet>
         <title>Fast Food | Dashboard</title>
       </Helmet>
-      <div className="flex">
-      {/* side bar */}
-      <div className="w-64 min-h-screen text-white bg-red-800">
-        <ul className="menu p-4">
 
-         {
-          isAdmin && (<>
-           <li>    
-            <NavLink to="/dashboard/statistics"> <FcStatistics></FcStatistics> Statistics</NavLink>
-          </li>
-          <li>    
-            <NavLink to="/dashboard/addItems"> <FaUtensils></FaUtensils> Add Item</NavLink>
-          </li>
-          <li>    
-            <NavLink to="/dashboard/addedList"> <FaUtensils></FaUtensils> AddedList</NavLink>
-          </li>
-       
-          <li>    
-            <NavLink to="/dashboard/allParcel"> <FaParagraph></FaParagraph> All Parcel</NavLink>
-          </li>
-          <li>    
-            <NavLink to="/dashboard/allUsers"> <FaUsers></FaUsers> All Users</NavLink>
-          </li>
-          <li>    
-            <NavLink to="/dashboard/allDeliveryMan"> <MdDeliveryDining></MdDeliveryDining> All Delivery Men</NavLink>
-          </li>
+      {/* Sidebar */}
+      <div className={`bg-gradient-to-b from-red-900 to-red-800 text-white transition-all duration-300 ${sidebarOpen ? "w-64" : "w-16"} flex flex-col`}>
+        {/* Toggle Button */}
+        <div className="flex justify-end p-2">
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="text-white hover:text-yellow-400 transition"
+          >
+            {sidebarOpen ? "⬅" : "➡"}
+          </button>
+        </div>
 
-          
-          </>)
-         }
-          
-           
-         
-         { isDeliveryMan && (<> <li>    
-            <NavLink to="/dashboard/deliveryList"> <FaListAlt></FaListAlt> My Delivery List</NavLink>
-          </li>
+        {/* Menu */}
+        <ul className="flex-1 overflow-auto space-y-2 p-2">
+          {isAdmin && (
+            <>
+              <li>
+                <NavLink to="/dashboard/addItems" className={menuItemClass}>
+                  <FaUtensils /> {sidebarOpen && "Add Item"}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/addedList" className={menuItemClass}>
+                  <FaUtensils /> {sidebarOpen && "Added List"}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/allParcel" className={menuItemClass}>
+                  <FaParagraph /> {sidebarOpen && "All Parcel"}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/allUsers" className={menuItemClass}>
+                  <FaUsers /> {sidebarOpen && "All Users"}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/allDeliveryMan" className={menuItemClass}>
+                  <MdDeliveryDining /> {sidebarOpen && "All Delivery Men"}
+                </NavLink>
+              </li>
+            </>
+          )}
 
-          <li>    
-            <NavLink to="/dashboard/review"> <FaAd></FaAd>My Review</NavLink>
-          </li>
-          </>)}
-           
-         { isUser && (<> <li>    
-            <NavLink to="/dashboard/profile"> <FaUser></FaUser> My Profile</NavLink>
-          </li>
-          <li>    
-            <NavLink to="/dashboard/bookings"> <FaList></FaList> My Bookings</NavLink>
-          </li>
-          </>)}
-            
-          
+          {isDeliveryMan && (
+            <>
+              <li>
+                <NavLink to="/dashboard/deliveryList" className={menuItemClass}>
+                  <FaListAlt /> {sidebarOpen && "My Delivery List"}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/review" className={menuItemClass}>
+                  <FaAd /> {sidebarOpen && "My Review"}
+                </NavLink>
+              </li>
+            </>
+          )}
 
-          <div className="divider"></div>
+          {isUser && (
+            <>
+              <li>
+                <NavLink to="/dashboard/profile" className={menuItemClass}>
+                  <FaUser /> {sidebarOpen && "My Profile"}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/bookings" className={menuItemClass}>
+                  <FaList /> {sidebarOpen && "My Bookings"}
+                </NavLink>
+              </li>
+            </>
+          )}
 
-          <li>    
-            <NavLink to="/"> <FaHome></FaHome> Home</NavLink>
+          <div className="divider border-t border-red-700 my-2"></div>
+
+          <li>
+            <NavLink to="/" className={menuItemClass}>
+              <FaHome /> {sidebarOpen && "Home"}
+            </NavLink>
           </li>
-          <li>    
-            <NavLink to="/menu"> <FaSearch></FaSearch> Menu</NavLink>
+          <li>
+            <NavLink to="/menu" className={menuItemClass}>
+              <FaSearch /> {sidebarOpen && "Menu"}
+            </NavLink>
           </li>
-        
         </ul>
       </div>
-      {/* dashboard content */}
-      <div className="flex-1 p-8">
-        <Outlet></Outlet>
+
+      {/* Main content */}
+      <div className="flex-1 p-6 overflow-auto bg-gray-100">
+        <Outlet />
       </div>
-    </div>
     </div>
   );
 };

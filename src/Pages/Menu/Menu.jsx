@@ -74,7 +74,7 @@ const Menu = () => {
           </h2>
           <p className="text-lg font-medium text-gray-600 mb-1">
             Category:{" "}
-            <span className="text-gray-800">{card.category || "N/A"}</span>
+            <span className="text-gray-800">{card.origin || "N/A"}</span>
           </p>
           <p className="text-lg font-medium text-gray-600 mb-1">
             Stock:{" "}

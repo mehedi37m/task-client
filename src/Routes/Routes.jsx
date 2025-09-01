@@ -18,7 +18,6 @@ import Profile from "../Pages/Dashboard/Users/MyProfile/Profile";
 import MyBooking from "../Pages/Dashboard/Users/MyBooking/MyBooking";
 import AllParcel from "../Pages/Dashboard/Admin/AllParcel/AllParcel";
 import DeliveryList from "../Pages/Dashboard/DelivaryMan/MyDeliveryList/DeliveryList";
-import Statistics from "../Pages/Dashboard/Admin/Statistics/Statistics";
 import AddedList from "../Pages/Dashboard/Admin/AddedList/AddedList";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -92,10 +91,7 @@ const router = createBrowserRouter([
           path:'deliveryList',
           element:<DeliveryList></DeliveryList>
         },
-        {
-          path:'statistics',
-          element:<AdminRoute><Statistics></Statistics></AdminRoute>
-        },
+        
         {
           path:'addedList',
           element:<AdminRoute><AddedList></AddedList></AdminRoute>
