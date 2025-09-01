@@ -1,6 +1,7 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 import useAuth from "../../hooks/useAuth";
 
@@ -87,125 +88,137 @@ const CardDetails = () => {
 
 
   return (
-    <div className="h-screen md:h-[80vh]">
-      <Helmet>
-        <title>Fast Food || ItemsDetails</title>
-      </Helmet>
-      <div className=" p-20">
-        <div className="card grid grid-cols-1 md:grid-cols-2 card-side  bg-base-100 shadow-xl mb-5">
-          <div className="p-10 bg-slate-50 text-center">
-            <h2 className=" font-bold mb-5 text-blue-900 text-3xl">{name}</h2>
-            <p className="mb-5 text-blue-900">{description}</p>
-            <p className="text-2xl">
-              <span className="text-blue-900 font-bold">Price</span> : ${price}
-            </p>
+  <div className="min-h-screen md:min-h-[80vh] bg-gradient-to-br from-sky-100 via-white to-sky-200">
+  <Helmet>
+    <title>Fast Food || ItemsDetails</title>
+  </Helmet>
 
-            {/* <p className='text-blue-900 font-bold pt-4'>Category : <span className='text-red-500'>{category}</span></p>
-                  <p className='text-blue-900 font-bold '>Made By : <span className='text-red-500'>{made_by}</span>  </p>
-                  <p className='text-blue-900 font-bold pb-4'>Food Origin : <span className='text-red-500'>{food_origin}</span>  </p> */}
+  {/* Item Details Section */}
+  <div className="p-6 md:p-16">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="grid grid-cols-1 md:grid-cols-2 backdrop-blur-xl bg-white/70 shadow-2xl rounded-3xl overflow-hidden border border-sky-100"
+    >
+      {/* Text Section */}
+      <div className="p-10 flex flex-col justify-center text-center md:text-left">
+        <h2 className="font-extrabold mb-5 text-sky-800 text-4xl drop-shadow-sm">
+          {name}
+        </h2>
+        <p className="mb-6 text-gray-700 leading-relaxed text-lg">
+          {description}
+        </p>
+        <p className="text-3xl font-bold">
+          <span className="text-sky-700">Price</span> :
+          <span className="text-sky-900 ml-2">${price}</span>
+        </p>
+      </div>
 
-           
+      {/* Image Section */}
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 200 }}
+        className="overflow-hidden"
+      >
+        <img
+          className="h-96 w-full object-cover"
+          src={image_url}
+          alt="Item"
+        />
+      </motion.div>
+    </motion.div>
+  </div>
+
+  {/* Booking Form Section */}
+  <motion.div
+    initial={{ opacity: 0, y: 80 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 1 }}
+    className="max-w-6xl mx-auto mb-20"
+  >
+    <div className="shadow-2xl bg-gradient-to-br from-sky-500 via-sky-600 to-sky-700 rounded-3xl p-10 text-white relative overflow-hidden">
+      <div className="absolute -top-20 -right-20 w-60 h-60 bg-sky-400 rounded-full blur-3xl opacity-40"></div>
+      <div className="absolute bottom-0 left-0 w-40 h-40 bg-sky-300 rounded-full blur-2xl opacity-40"></div>
+
+      <form onSubmit={handleBookParcel} className="relative z-10">
+        <h3 className="text-4xl font-extrabold mb-10 text-center drop-shadow-lg">
+          Book Your Parcel
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Left Side Inputs */}
+          <div className="space-y-5">
+            <div className="form-control">
+              <label className="label font-semibold">Email</label>
+              <input type="email" defaultValue={email} className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Name</label>
+              <input type="text" defaultValue={displayName} className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Phone Number</label>
+              <input type="number" name="number" placeholder="Phone Number" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Parcel Type</label>
+              <input type="text" name="parcel_type" placeholder="Parcel Type" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Parcel Weight</label>
+              <input type="number" name="parcel_weight" placeholder="Parcel Weight" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Receiver Name</label>
+              <input type="text" name="receiver_name" placeholder="Receiver Name" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
           </div>
 
-          <img
-            className="h-96 w-full rounded-r-lg"
-            src={image_url}
-            alt="Movie"
+          {/* Right Side Inputs */}
+          <div className="space-y-5">
+            <div className="form-control">
+              <label className="label font-semibold">Receiver Phone Number</label>
+              <input type="number" name="receiver_number" placeholder="Receiver Phone Number" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Delivery Address</label>
+              <input type="text" name="delivery_address" placeholder="Delivery Address" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Delivery Date</label>
+              <input type="date" name="delivery_date" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Latitude</label>
+              <input type="number" name="delivery_address_latitude" placeholder="Latitude" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Longitude</label>
+              <input type="number" name="delivery_address_longitude" placeholder="Longitude" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+            <div className="form-control">
+              <label className="label font-semibold">Price</label>
+              <input type="number" name="price" placeholder="Price" className="input input-bordered w-full text-black rounded-xl shadow-md" required />
+            </div>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <div className="text-center mt-12">
+          <motion.input
+            whileHover={{ scale: 1.08, boxShadow: "0px 0px 20px rgba(255,255,255,0.6)" }}
+            whileTap={{ scale: 0.95 }}
+            className="btn bg-white text-sky-700 border-none px-12 py-4 rounded-2xl text-lg font-bold shadow-lg hover:bg-sky-50 transition-all"
+            type="submit"
+            value="Submit"
           />
         </div>
-      </div>
-
-
-      <div className="card w-full  shadow-2xl bg-sky-500">
-      <form onSubmit={handleBookParcel} className="card-body ">
-        <div className="flex justify-around">
-        <div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Email</span>
-          </label>
-          <input type="email" defaultValue={email} className="input input-bordered" required />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Name</span>
-          </label>
-          <input type="text" defaultValue={displayName}  className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Number</span>
-          </label>
-          <input type="number" name="number" placeholder="Phone Number" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Parcel Type</span>
-          </label>
-          <input type="text" name="parcel_type" placeholder="Parcel Type" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Parcel Weight</span>
-          </label>
-          <input type="number" name="parcel_weight" placeholder="Parcel Weight" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Receiver Name </span>
-          </label>
-          <input type="text" name="receiver_name" placeholder="Receiver Name" className="input input-bordered" required /> 
-        </div>
-        </div>
-       <div>
-       <div className="form-control">
-          <label className="label">
-            <span className="label-text">Receiver Phone Number</span>
-          </label>
-          <input type="number" name="receiver_number" placeholder="Receiver Phone Number" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Delivery Address</span>
-          </label>
-          <input type="text" name="delivery_address" placeholder="Delivery Address" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Delivery Date</span>
-          </label>
-          <input type="date" name="delivery_date" placeholder="Delivery Date" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Delivery Address Latitude</span>
-          </label>
-          <input type="number" name="delivery_address_latitude" placeholder="Delivery Address Latitude" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Delivery Address Longitude</span>
-          </label>
-          <input type="number" name="delivery_address_longitude" placeholder="Delivery Address Longitude" className="input input-bordered" required /> 
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Price</span>
-          </label>
-          <input type="number" name="price" placeholder="Price" className="input input-bordered" required /> 
-        </div>
-       </div>
-        </div>
-        <input className="btn btn-primary" type="submit" value="submit" />
       </form>
-
-      </div>
-
- <div>
-
- </div>
-      
     </div>
+  </motion.div>
+</div>
+
   );
 };
 
