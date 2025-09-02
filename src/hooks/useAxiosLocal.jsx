@@ -1,11 +1,10 @@
 import axios from "axios";
 
-
 const axiosLocal = axios.create({
-    baseURL: 'https://parcel-management-server-sigma.vercel.app'
-})
+  baseURL: "https://parcel-management-server-sigma.vercel.app",
+});
 const useAxiosLocal = () => {
-    return axiosLocal;
+  return axiosLocal;
 };
 
 export default useAxiosLocal;

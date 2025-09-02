@@ -5,6 +5,7 @@ import logo from "../../assets/logo.jpg";
 
 const NavBar = () => {
   const { user, logOut, setUser } = useAuth();
+ 
 
   const handleLogOut = () => {
     logOut()
@@ -22,14 +23,7 @@ const NavBar = () => {
           Home
         </Link>
       </li>
-      <li>
-        <Link
-          to="/dashboard"
-          className="px-4 py-2 hover:text-orange-400 transition-colors"
-        >
-          Dashboard
-        </Link>
-      </li>
+     
       <li>
         <Link
           to="/menu"
@@ -38,16 +32,15 @@ const NavBar = () => {
           Menu
         </Link>
       </li>
-      <li>
-        <Link to="/dashboard/cart">
-          <button className="btn btn-ghost relative">
-            <FaShoppingCart className="mr-2 text-lg" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
-              3
-            </span>
-          </button>
+       <li>
+        <Link
+          to="/dashboard"
+          className="px-4 py-2 hover:text-orange-400 transition-colors"
+        >
+          Dashboard
         </Link>
       </li>
+      
     </>
   );
 
@@ -90,6 +83,7 @@ const NavBar = () => {
           >
             <img className="h-10 rounded-full" src={logo} alt="logo" />
             Fast Speed
+           
           </Link>
         </div>
 
@@ -111,6 +105,7 @@ const NavBar = () => {
                 <div className="w-12 h-12 rounded-full border-2 border-orange-400 overflow-hidden hover:scale-105 transition">
                   {user.photoURL ? (
                     <img src={user.photoURL} alt="user" />
+                    
                   ) : (
                     <FaUserAlt className="bg-white text-orange-500 w-full h-full p-2" />
                   )}

@@ -10,8 +10,8 @@ const MyBooking = () => {
   const [cart, refetch] = useCart();
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
   const axiosSecure = useAxiosSecure();
-  const {user} = useAuth();
-  const {displayName, photoURL} = user;
+  const { user } = useAuth();
+  const { displayName, photoURL } = user;
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -55,13 +55,13 @@ const MyBooking = () => {
 
   const submitReview = (deliveryManName, deliveryManEmail) => {
     const reviewItem = {
-        rating,
-        description,
-        deliveryManName, 
-        deliveryManEmail, 
-        displayName,
-        photoURL 
-      };
+      rating,
+      description,
+      deliveryManName,
+      deliveryManEmail,
+      displayName,
+      photoURL,
+    };
 
     fetch("https://parcel-management-server-sigma.vercel.app/review", {
       method: "POST",
@@ -133,29 +133,39 @@ const MyBooking = () => {
                 </th>
                 <td>
                   <div>
-                        <div>
-                         <p>Rating</p>
-                          <input className="p-3"
-                          placeholder="type rating"
-                            type="number"
-                            id="rating"
-                            min="1"
-                            max="5"
-                            value={rating}
-                            onChange={handleRatingChange}
-                          />
-                        </div>
-                        <div>
-                         
-                          <textarea
-                          placeholder="description"
-                            id="description"
-                            value={description}
-                            onChange={handleDescriptionChange}
-                          />
-                        </div>
-                        <button className="btn" onClick={() => submitReview(item.deliveryMan_name, item.deliveryMan_email)}>Submit Review</button>
-                      </div>
+                    <div>
+                      <p>Rating</p>
+                      <input
+                        className="p-3"
+                        placeholder="type rating"
+                        type="number"
+                        id="rating"
+                        min="1"
+                        max="5"
+                        value={rating}
+                        onChange={handleRatingChange}
+                      />
+                    </div>
+                    <div>
+                      <textarea
+                        placeholder="description"
+                        id="description"
+                        value={description}
+                        onChange={handleDescriptionChange}
+                      />
+                    </div>
+                    <button
+                      className="btn"
+                      onClick={() =>
+                        submitReview(
+                          item.deliveryMan_name,
+                          item.deliveryMan_email
+                        )
+                      }
+                    >
+                      Submit Review
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

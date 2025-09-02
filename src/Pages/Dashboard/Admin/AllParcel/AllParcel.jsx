@@ -6,11 +6,11 @@ const AllParcel = () => {
   const [allCarts, setAllCarts] = useState([]);
   const [selectedDeliveryManEmail, setSelectedDeliveryManEmail] = useState("");
   const [selectedDeliveryManName, setSelectedDeliveryManName] = useState("");
-  
-  console.log(selectedDeliveryManEmail);
+
+  // console.log(selectedDeliveryManEmail);
 
   const [user] = useGetAllUsers();
-  const deliveryMan = user.filter((man) => man.role === "deliveryMan");
+  const deliveryMan = user.filter((man) => man.role == "deliveryMan");
 
   useEffect(() => {
     fetch("https://parcel-management-server-sigma.vercel.app/itemsCart")
@@ -24,27 +24,29 @@ const AllParcel = () => {
       status: "On The Way",
       deliveryMan_email: selectedDeliveryManEmail,
       deliveryMan_name: selectedDeliveryManName,
-      
     };
-    // console.log(updatedUser)
 
-    fetch(`https://parcel-management-server-sigma.vercel.app/itemsCart/onTheWay/${user._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedUser),
-    })
+    fetch(
+      `https://parcel-management-server-sigma.vercel.app/itemsCart/onTheWay/${user._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUser),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: `${user.status}!`,
+            title: `Status updated to On The Way!`,
             showConfirmButton: false,
             timer: 1500,
           });
+          // Optionally update UI after success
         } else {
           console.error("Failed to update status.");
         }
@@ -53,12 +55,12 @@ const AllParcel = () => {
         console.error("Error updating status:", error);
       });
   };
+
   const handleDeliveryManChange = (event) => {
     const { value } = event.target;
-    const [deliveryManEmail, deliveryManName  ] = value.split(":");
+    const [deliveryManEmail, deliveryManName] = value.split(":");
     setSelectedDeliveryManEmail(deliveryManEmail);
     setSelectedDeliveryManName(deliveryManName);
-    
   };
 
   return (
@@ -70,7 +72,7 @@ const AllParcel = () => {
 
       <div>
         <div className="overflow-x-auto">
-          <table className="table table-zebra w-full">
+          <table className="table text-black font-bold w-full">
             {/* head */}
             <thead>
               <tr>
@@ -78,8 +80,6 @@ const AllParcel = () => {
                 <th>Users Name</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Booking Date</th>
-                <th>Delivery Date</th>
                 <th>Cost</th>
                 <th>Status</th>
                 <th>Select DeliveryMan</th>
@@ -92,10 +92,9 @@ const AllParcel = () => {
                   <th>{index + 1}</th>
                   <td>{user.displayName}</td>
                   <td>{user.email}</td>
-                  <td>{user.number}</td>
-                  <td>{user?.delivery_date}</td>
-                  <td>{user?.delivery_date}</td>
-                  <td>{user.price}</td>
+                  <td>{user.receiver_number}</td>
+
+                  <td>{user.subtotal}</td>
                   <td>
                     {user.status !== "pending" ? (
                       "On The Way"

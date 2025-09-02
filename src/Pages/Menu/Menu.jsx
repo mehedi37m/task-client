@@ -95,7 +95,7 @@ const Menu = () => {
         <div className="mt-6 flex gap-3">
           <Link to={`/details/${card._id}`} className="w-full">
             <button className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 text-white font-semibold shadow-lg hover:from-blue-600 hover:via-indigo-700 hover:to-purple-700 hover:shadow-[0_10px_30px_rgba(99,102,241,0.6)] transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
-              View Details 🚀
+              View Cart 🚀
             </button>
           </Link>
           <button className="w-14 h-12 flex items-center justify-center rounded-xl bg-white/70 backdrop-blur-md hover:bg-white text-gray-700 hover:text-pink-600 shadow-lg hover:shadow-[0_10px_20px_rgba(236,72,153,0.5)] transition-all duration-300 transform hover:-translate-y-1 hover:scale-110">

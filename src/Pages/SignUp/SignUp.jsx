@@ -4,11 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-
-
-
 const SignUp = () => {
- 
   const { createUser, updateUserProfile } = useAuth();
   const {
     register,
@@ -20,21 +16,19 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-   
     createUser(data.email, data.password)
-  
       .then((result) => {
-       console.log(result.user)
-        updateUserProfile(data.name, data.photoURL, data.number,data.password)
+        console.log(result.user);
+        updateUserProfile(data.name, data.photoURL, data.number, data.password)
           .then(() => {
-            const userInfo ={
+            const userInfo = {
               name: data.name,
               email: data.email,
-              password:data.password,
-              role: 'user',
+              password: data.password,
+              role: "user",
               phoneNumber: data.number,
-              image: data.photoURL
-            }
+              image: data.photoURL,
+            };
             fetch("https://parcel-management-server-sigma.vercel.app/users", {
               method: "POST",
               headers: {
@@ -53,9 +47,8 @@ const SignUp = () => {
                     confirmButtonText: "Cool",
                   });
                 }
-                navigate('/')
+                navigate("/");
               });
-                              
           })
           .catch((err) => {
             console.log(err);
@@ -202,7 +195,10 @@ const SignUp = () => {
             </form>
             <p className="px-6 pb-2">
               <small>
-              Already an Account? <Link to="/login" className="text-blue-500">Login</Link>
+                Already an Account?{" "}
+                <Link to="/login" className="text-blue-500">
+                  Login
+                </Link>
               </small>
             </p>
             {/* <SocialLogin></SocialLogin> */}

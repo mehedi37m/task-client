@@ -18,56 +18,9 @@ const AllUsers = () => {
     },
   });
 
-  const handleMakeAdmin = (user) => {
-    console.log(user);
-    const updatedUser = { ...user, role: "admin" };
-    fetch(`https://parcel-management-server-sigma.vercel.app/users/admin/${user._id}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedUser),
-    }).then((res) => {
-      // console.log(res.data);
+ 
 
-      if (res.data.modifiedCount > 0) {
-        refetch();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${user.name} is an Admin Now!`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
-  };
-
-  const handleMakeDeliveryMan = (user) => {
-    console.log(user);
-    const updatedUser = { ...user, role: "deliveryMan" };
-    fetch(`https://parcel-management-server-sigma.vercel.app/users/deliveryman/${user._id}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedUser),
-    }).then((res) => {
-      // console.log(res.data);
-
-      if (res.data.modifiedCount > 0) {
-        setLoading(true);
-        refetch();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${user.name} is an Admin Now!`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
-  };
+  
 
   const handleDelete = (user) => {
     Swal.fire({
@@ -109,16 +62,16 @@ const AllUsers = () => {
 
       <div>
         <div className="overflow-x-auto">
-          <table className="table table-zebra w-full">
+          <table className="table text-black font-bold w-full">
             {/* head */}
             <thead>
-              <tr>
+              <tr className="text-black text-2xl">
                 <th></th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Number</th>
                 <th>Admin</th>
-                <th>Delivery Man</th>
+                <th>All users</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -127,31 +80,28 @@ const AllUsers = () => {
               {users.map((user, index) => (
                 <tr key={user._id}>
                   <th>{index + 1}</th>
-                  <td>{user.name}</td>
+                  <td>{user.name}
+                    {user.role === "user" ? (
+                      <p className="text-sm text-red-500">(delivery man)</p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </td>
                   <td>{user.email}</td>
                   <td>{user.phoneNumber}</td>
                   <td>
                     {user.role === "admin" ? (
                       "Admin"
                     ) : (
-                      <button
-                        onClick={() => handleMakeAdmin(user)}
-                        className="btn btn-lg bg-orange-600"
-                      >
-                        <FaUsers className="text-white text-xl"></FaUsers>
-                      </button>
+                      <p></p>
+                        
                     )}
                   </td>
                   <td>
-                    {user.role === "deliveryMan" ? (
-                      "DeliveryMan"
+                    {user.role === "user" ? (
+                      "user"
                     ) : (
-                      <button
-                        onClick={() => handleMakeDeliveryMan(user)}
-                        className="btn bg-blue-400"
-                      >
-                        <FcDatabase className="text-white "></FcDatabase>
-                      </button>
+                      <p></p>
                     )}
                   </td>
                   <td>

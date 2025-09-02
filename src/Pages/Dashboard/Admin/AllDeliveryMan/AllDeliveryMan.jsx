@@ -14,22 +14,22 @@ const AllDeliveryMan = () => {
     return (
         <div>
             <div className='flex justify-around gap-5'>
-                <h1 className='text-3xl font-bold'>All User : </h1>
-                <h1 className='text-3xl font-bold'>Total User : {deliveryMan.length} </h1>
+                
+                <h1 className='text-3xl font-bold py-20'>Total User : {deliveryMan.length} </h1>
             </div>
 
             <div>
             <div className="overflow-x-auto">
-  <table className="table table-zebra w-full">
+  <table className="table text-black font-bold w-full">
   
     <thead>
-      <tr>
+      <tr className="text-2xl text-blue-700">
         <th></th>
         <th>Name</th>
         <th>Email</th>
         <th>Number</th>
-        <th>Number of Parcel</th>
-        <th>Review</th>
+        <th>status</th>
+      
       </tr>
     </thead>
     <tbody>

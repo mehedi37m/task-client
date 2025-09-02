@@ -1,7 +1,4 @@
-import {
-    createBrowserRouter,
-
-  } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
@@ -24,85 +21,108 @@ import PrivateRoute from "./PrivateRoute";
 import Review from "../Pages/Dashboard/DelivaryMan/My Review/Review";
 
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Main></Main>,
-      errorElement:<ErrorPage></ErrorPage>,
-      children:[
-        {
-            path: "/",
-            element:<Home></Home>
-        },
-        {
-          path:"/login",
-          element:<Login></Login>
-        },
-        {
-          path:"/signUp",
-          element:<SignUp></SignUp>
-        },
-        {
-          path:"/menu",
-          element:<Menu></Menu>
-        },
-        {
-          path:"/details/:id",
-          element:<CardDetails></CardDetails>,
-          loader:() => fetch('https://parcel-management-server-sigma.vercel.app/items')
-        },
-        
-        {
-          path:"/updateItems/:id",
-          element:<UpdateItems></UpdateItems>,
-          loader:({params}) => fetch(`https://parcel-management-server-sigma.vercel.app/items/${params.id}`)
-        },
-      ]
-    },
-    {
-      path:"/dashboard",
-      element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
-      errorElement:<ErrorPage></ErrorPage>,
-      children: [
-        {
-          path:'addItems',
-          element:<AdminRoute><AddItems></AddItems></AdminRoute>
-        },
-        {
-          path:'allUsers',
-          element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
-        },
-        {
-          path:'allDeliveryMan',
-          element:<AllDeliveryMan></AllDeliveryMan>
-        },
-        {
-          path:'profile',
-          element:<Profile></Profile>
-        },
-        {
-          path:'bookings',
-          element:<MyBooking></MyBooking>
-        },
-        {
-          path:'allParcel',
-          element:<AdminRoute><AllParcel></AllParcel></AdminRoute>
-        },
-        {
-          path:'deliveryList',
-          element:<DeliveryList></DeliveryList>
-        },
-        
-        {
-          path:'addedList',
-          element:<AdminRoute><AddedList></AddedList></AdminRoute>
-        },
-        {
-          path:'review',
-          element:<Review></Review>
-        }
+  {
+    path: "/",
+    element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/signUp",
+        element: <SignUp></SignUp>,
+      },
+      {
+        path: "/menu",
+        element: <Menu></Menu>,
+      },
+      {
+        path: "/details/:id",
+        element: <CardDetails></CardDetails>,
+        loader: () =>
+          fetch("https://parcel-management-server-sigma.vercel.app/items"),
+      },
 
-      ]
-    }
-  ]);
+      {
+        path: "/updateItems/:id",
+        element: <UpdateItems></UpdateItems>,
+        loader: ({ params }) =>
+          fetch(
+            `https://parcel-management-server-sigma.vercel.app/items/${params.id}`
+          ),
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "addItems",
+        element: (
+          <AdminRoute>
+            <AddItems></AddItems>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "allUsers",
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "allDeliveryMan",
+        element: <AllDeliveryMan></AllDeliveryMan>,
+      },
+      {
+        path: "profile",
+        element: <Profile></Profile>,
+      },
+      {
+        path: "bookings",
+        element: <MyBooking></MyBooking>,
+      },
+      {
+        path: "allParcel",
+        element: (
+          <AdminRoute>
+            <AllParcel></AllParcel>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "deliveryList",
+        element: <DeliveryList></DeliveryList>,
+      },
+
+      {
+        path: "addedList",
+        element: (
+          <AdminRoute>
+            <AddedList></AddedList>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "review",
+        element: <Review></Review>,
+      },
+    ],
+  },
+]);
 
 export default router;
